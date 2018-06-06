@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>用户登录</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Jack,jule,12,2017">
+    <meta name="Keywords" content="Html,blog,python,django">
+</head>
+<body>
+    <div class="form-control">
+        <H1>登录</H1>
+        <form action="/login/user/" method="post" id="login">
+            {% csrf_token %}
+            <ul>
+                <li>
+                    <input type="text" id="name" name="user_name" placeholder="Username" title="Name" required/>
+                </li>
+                <li>
+                    <input type="password" class="lock" name="password" title="Minimum 8 characters, one number, one uppercase and one lowercase letter"
+                            placeholder="Password" id="password1" required/>
+                </li>
+                <li>
+                    <input type="submit" value="登录"/>
+                </li>
+
+            </ul>
+        </form>
+    </div>
+
+
+</body>
+</html>

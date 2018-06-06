@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block blog-upload %}
+<div class="blog" align="left">最近更新</div>
+    {% for contact in contacts %}
+    <div class="blog-title-01" align="left">
+        <h2><a href="blog_content.html">{{contact.title}}</a></h2>
+    </div>
+    <div class="blog-content-01" align="left">
+        &nbsp&nbsp&nbsp&nbsp{{ contact.content | truncatewords_html:20 }}
+    </div>
+    {% endfor %}
+<div class="page-border" >
+<nav class="page-pagination">
+<ul class="pagination">
+        {% if contacts.has_previous %}
+            <li>
+            <a href="?page={{ contacts.previous_page_number }}" aria-label="previous">
+            <span aria-hidden="true">&laquo;</span>
+            </a></li>
+        {% endif %}
+        {% for pg in contacts.paginator.page_range %}
+            {% circle_page contacts.number pg %}
+        {% endfor %}
+        {% if contacts.has_next %}
+            <li>
+            <a href="?page={{ contacts.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span></a></li>
+        {% endif %}
+
+</ul>
+</nav></div>
+{% endblock %}
