@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>文章_平凡,致简</title>
+<meta name="keywords" content="个人博客,平凡,致简个人博客,技术博客，IT,Python" />
+<meta name="description" content="平凡,致简，是一个关于python,java,js等技术的博客。" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/css/base.css" rel="stylesheet">
+<link href="/static/css/index.css" rel="stylesheet">
+<link href="/static/css/m.css" rel="stylesheet">
+<script src="/static/js/jquery.min.js" ></script>
+<script src="/static/js/jquery.easyfader.min.js"></script>
+<script src="/static/js/hc-sticky.js"></script>
+<script src="/static/js/comm.js"></script>
+<script src="/static/js/scrollReveal.js"></script>
+<!--[if lt IE 9]>
+<script src="/static/js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<header class="header-navigation" id="header">
+  <nav>
+    <div class="logo"><a href="http://www.jack61.com">平凡,致简</a></div>
+    <h2 id="mnavh"><span class="navicon"></span></h2>
+    <ul id="starlist">
+      <li><a href="{% url 'home_page' %}">首页</a></li>
+      <li><a href="{% url 'theme_article' article_theme='零一世界' index=1 %}">零一世界</a></li>
+      <li ><a href="{% url 'theme_article' article_theme='品味生活' index=1 %}">品味生活</a></li>
+      <li><a href="{% url 'theme_article' article_theme='零一世界' index=1 %}">文章转载</a></li>
+      <li><a href="{% url 'time_line' index=1 %}">时间轴</a></li>
+      <li><a href="{% url 'about_me' %}">关于我</a></li>
+    </ul>
+
+  </nav>
+</header>
+<article>  
+  <main>
+      {% if category_list %}
+          {% for article in category_list %}
+    <div class="blogs" data-scroll-reveal="enter bottom over 1s" >
+      <h3 class="blogtitle"><a href="{% url 'article_detail' article_name=article.title %}" target="_blank">{{ article.title }}</a></h3>
+      <span class="blogpic"><a href="{% url 'article_detail' article_name=article.title %}" title=""><img src="{{ article.image }}" alt=""></a></span>
+      <p class="blogtext">{{ article.content | truncatewords_html:20 }}</p>
+      <div class="bloginfo">
+        <ul>
+          <li class="author">{{ article.author }}</li>
+          <li class="lmname">{{ article.category }}</li>
+          <li class="timer">{{ article.create_time |date:"Y-m-d" }}</li>
+          <li class="view"><span>{{ article.click_nums }}</span></li>
+        </ul>
+      </div>
+    </div>
+          {% endfor %}
+          {% if judge %}
+          <div class="pagelist"> <a><b>共{{ page_nums }}页</b> </a>
+    {% if category_list.has_previous %}
+            <a href="{% url 'article_category' category_name=category_name index=1 %}">首页</a>
+            <a href="{% url 'article_category' category_name=category_name index=category_list.previous_page_number %}">上一页</a>
+        {% endif %}
+    {% if category_list.has_next %}
+            <a href="{% url 'article_category' category_name=category_name index=category_list.next_page_number %} ">下一页</a>
+            <a href="{% url 'article_category' category_name=category_name index=category_list.paginator.num_pages %}">尾页</a>
+        {% endif %}
+</div>
+              {% else %}
+              {% endif %}
+  {% endif %}
+
+          {% if tag_list %}
+              {% for tags in tag_list %}
+          <div class="blogs" data-scroll-reveal="enter bottom over 1s" >
+      <h3 class="blogtitle"><a href="{% url 'article_detail' article_name=tags.title %}" target="_blank">{{ tags.title }}</a></h3>
+      <span class="blogpic"><a href="{% url 'article_detail' article_name=tags.title %}" title=""><img src="{{ tags.image }}" alt=""></a></span>
+      <p class="blogtext">{{ tags.content | truncatewords_html:20  }} </p>
+      <div class="bloginfo">
+        <ul>
+          <li class="author">{{ tags.author }}</li>
+          <li class="lmname"><a href="{% url 'article_category' category_name=tags.category index=1 %}">{{ tags.category }}</a></li>
+          <li class="timer">{{ tags.creata_time }}</li>
+          <li class="view"><span>{{ tags.click_nums }}</span></li>
+
+        </ul>
+      </div>
+    </div>
+              {% endfor %}
+              {% if judge %}
+              <div class="pagelist"> <a><b>共{{ page_nums }}页</b> </a>
+    {% if tag_list.has_previous %}
+            <a href="{% url 'article_tag' tag_name=tag_name index=1 %}">首页</a>
+            <a href="{% url 'article_tag' tag_name=tag_name index=tag_list.previous_page_number %}">上一页</a>
+        {% endif %}
+    {% if tag_list.has_next %}
+            <a href="{% url 'article_tag' tag_name=tag_name index=tag_list.next_page_number %} ">下一页</a>
+            <a href="{% url 'article_tag' tag_name=tag_name index=tag_list.paginator.num_pages %}">尾页</a>
+        {% endif %}
+</div>
+                  {% else %}
+                  {% endif %}
+
+    {% endif %}
+
+      </main>
+  <aside id="stickMe">
+    <div class="r_box" >
+      <div class="fenlei">
+        <h2>文章分类</h2>
+        <ul>
+            {% for category,count in category_articles.items %}
+          <li><a href="{% url 'article_category' category_name=category index=1 %}">{{ category }} ({{ count }})</a></li>
+            {% endfor %}
+        </ul>
+      </div>
+         <div class="cloud">
+        <h2>标签</h2>
+        <ul>
+            {% for tag in tags %}
+           <a href="{% url 'article_tag' tag_name=tag.name index=1 %}">{{ tag.name }}</a>
+            {% endfor %}
+        </ul>
+      </div>
+      <div class="tuijian">
+        <h2 id="tab">点击排行</h2>
+
+     <div id="content">
+        <ul style="display:block;">
+            {% for click_article in click_articles %}
+          <li><a href="{% url 'article_detail' article_name=click_article.title %}">{{ click_article.title }}</a></li>
+            {% endfor %}
+        </ul>
+       </div>
+      </div>
+
+    </div>
+  </aside>
+</article>
+<footer>
+  <p><a href="http://www.jack61.com" target="_blank">平凡,致简的个人博客</a> 粤ICP备18085108号</p>
+</footer>
+<a href="#" class="cd-top">Top</a>
+</body>
+</html>

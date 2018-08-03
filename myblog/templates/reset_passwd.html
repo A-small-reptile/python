@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>平凡，致简</title>
+<!-- Custom Theme files -->
+<link href="/static/css/login.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="水木年华,登录" />
+</head>
+
+<body>
+<div class="login">
+	<h2>平凡,致简</h2>
+	<div class="login-top">
+		<h1>验证已通过,请设置新密码</h1>
+		<form action="/modifypwd/" method="post" id="login">
+            {% csrf_token %}
+            <label><input type="hidden" name="email" value="{{ email }}" /></label>
+			<input type="password" class="lock" name="password" title="Minimum 8 characters, one number, one uppercase and one lowercase letter"
+                            placeholder="输入密码" id="password" />
+            <input type="password" class="lock" name="password1" title="Minimum 8 characters, one number, one uppercase and one lowercase letter"
+                            placeholder="确认密码" id="password1" />
+	    <div class="forgot">
+	    	<input type="submit" value="提交" >
+	    </div></form>
+    </div>
+    <div class="login-bottom">
+		<h3>新用户<a href="/register/">注册</a></h3>
+	    </div>
+</div>
+</body>
+</html>

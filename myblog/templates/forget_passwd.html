@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>平凡,致简</title>
+<!-- Custom Theme files -->
+<link href="/static/css/login.css" rel="stylesheet" type="text/css" media="all"/>
+<!-- Custom Theme files -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="水木年华,登录" />
+</head>
+
+<body>
+<div class="login">
+	<h2>平凡,致简</h2>
+	<div class="login-top">
+		<h1>重置密码</h1>
+		<form action="/forget/" method="post" id="login">
+            {% csrf_token %}
+			<input type="text" name="email" placeholder="请输入注册邮箱" title="Name" />
+            <label></label>
+			{{ forget_form.captcha }}
+	    <div class="forgot">
+	    	<input type="submit" value="下一步" >
+	    </div></form>
+	</div>
+	<div class="login-bottom">
+		<h3>新用户<a href="/register/">注册</a></h3>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>时间线_平凡,致简</title>
+<meta name="keywords" content="个人博客,平凡,致简个人博客,技术博客，IT,Python" />
+<meta name="description" content="平凡,致简，是一个关于python,java,js等技术的博客。" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="/static/css/base.css" rel="stylesheet">
+<link href="/static/css/time.css" rel="stylesheet">
+<link href="/static/css/m.css" rel="stylesheet">
+<script src="/static/js/jquery.min.js" ></script>
+<script src="/static/js/scrollReveal.js"></script>
+<script src="/static/js/time.js" ></script>
+<!--[if lt IE 9]>
+<script src="/static/js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<header class="header-navigation" id="header">
+  <nav>
+    <div class="logo"><a href="http://www.jack61.com">平凡,致简</a></div>
+    <h2 id="mnavh"><span class="navicon"></span></h2>
+    <ul id="starlist">
+      <li><a href="{% url 'home_page' %}">首页</a></li>
+      <li><a href="{% url 'theme_article' article_theme='零一世界' index=1 %}">零一世界</a></li>
+      <li ><a href="{% url 'theme_article' article_theme='品味生活' index=1 %}">品味生活</a></li>
+      <li><a href="{% url 'theme_article' article_theme='零一世界' index=1 %}">文章转载</a></li>
+      <li><a href="{% url 'time_line' index=1 %}">时间轴</a></li>
+      <li><a href="{% url 'about_me' %}">关于我</a></li>
+    </ul>
+
+  </nav>
+</header>
+<article>
+  <div class="timebox">
+    <ul>
+        {% for article in articles %}
+      <li><span>{{ article.create_time |date:"Y-m-d" }}</span><i><a href="{% url 'article_detail' article_name=article.title %}" target="_blank">{{ article.title }}</a></i></li>
+        {% endfor %}
+    </ul>
+  </div>
+{% if judge %}
+  <div class="pagelist"><a title="Total record">&nbsp;<b>共{{ page_nums }}页</b> </a>
+      {% if articles.has_previous %}
+            <a href="{% url 'time_line'  index=1 %}">首页</a>
+            <a href="{% url 'time_line'  index=articles.previous_page_number %}">上一页</a>
+        {% endif %}
+    {% if articles.has_next %}
+            <a href="{% url 'time_line'  index=articles.next_page_number %} ">下一页</a>
+            <a href="{% url 'time_line'  index=articles.paginator.num_pages %}">尾页</a>
+        {% endif %}
+     </div>
+    {% else %}
+{% endif %}
+</article>
+<footer >
+  <p> <a href="http://www.jack61.com" target="_blank">平凡,致简的个人博客</a> 粤ICP备18085108号</p>
+</footer >
+<a href="#" class="cd-top">Top</a>
+</body>
+</html>
